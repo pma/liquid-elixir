@@ -10,8 +10,6 @@ defmodule Liquid.Filters do
     @moduledoc """
     Structure that holds all the basic filter functions used in Liquid 3.
     """
-    use Timex
-
     def size(input) when is_binary(input) do
       String.length(input)
     end
@@ -424,22 +422,22 @@ defmodule Liquid.Filters do
       input |> date
     end
 
-    def date("now", format), do: Timex.now |> date(format)
+    def date("now", format), do: DateTime.utc_now() |> date(format)
 
-    def date("today", format), do: Timex.now |> date(format)
+    def date("today", format), do: DateTime.utc_now() |> date(format)
 
     def date(input, format) when is_binary(input) do
       with {:ok, input_date} <- NaiveDateTime.from_iso8601(input) do
         input_date |> date(format)
       else
         {:error, :invalid_format } ->
-          with {:ok, input_date} <- Timex.parse(input, "%a %b %d %T %Y", :strftime),
-          do: input_date |> date(format)
+          with {:ok, input_date} <- Calendar.NaiveDateTime.Parse.asctime(input),
+            do: input_date |> date(format)
       end
     end
 
     def date(input, format) do
-      with {:ok, date_str} <- Timex.format(input, format, :strftime),
+      with {:ok, date_str} <- Calendar.Strftime.strftime(input, format),
         do: date_str
     end
 

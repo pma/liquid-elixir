@@ -3,8 +3,8 @@ defmodule Liquid.Mixfile do
 
   def project do
     [ app: :liquid,
-      version: "0.6.0",
-      elixir: "~> 1.3",
+      version: "0.7.0",
+      elixir: "~> 1.4",
       deps: deps(),
       name: "Liquid",
       description: description(),
@@ -22,7 +22,7 @@ defmodule Liquid.Mixfile do
   defp deps do
     [{:credo, "~> 0.2", only: [:dev, :test]},
      {:benchfella, "~> 0.3.0", only: [:dev, :test]},
-     {:timex, "~> 3.0"},
+     {:calendar, "~> 0.17"},
      {:ex_doc, ">= 0.0.0", only: :dev}]
   end
 
