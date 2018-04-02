@@ -356,10 +356,14 @@ defmodule Liquid.Filters do
     def split(nil, _), do: []
 
     def slice(list, from, to) when is_list(list) do
+      from = String.to_integer(from)
+      to = String.to_integer(to)
       list |> Enum.slice(from, to)
     end
 
     def slice(<<string::binary>>, from, to) do
+      from = String.to_integer(from)
+      to = String.to_integer(to)
       string |> String.slice(from, to)
     end
 
